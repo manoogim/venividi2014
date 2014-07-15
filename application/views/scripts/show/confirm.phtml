@@ -1,0 +1,28 @@
+<table cellpadding="3" cellspacing="2" width="70%" align="center">
+<tr><td><h1><?= $this->title?></h1></td></tr>
+<?php foreach ($this->teams as $team) :?>
+<?php if (count($team->riders) > 0) : ?>
+	<tr bgcolor='yellow'>
+		<th><?= $team->teamname; ?> &nbsp; &nbsp;
+		
+	</tr>
+	<?php $cnt = 0;  foreach ($team->riders as $rider) : ?>
+	<tr>
+		<td><?php $cnt++; echo $cnt . '. ' . $rider->ridername . ': ' . $rider->classes; ?></td>
+	</tr>
+	<?php endforeach;?>
+
+	<?php endif;?>
+	<?php endforeach;?>
+	<tr>
+		<td >
+		<form name="confirm" method="post"
+			action="<?php echo $this->baseUrl() . '/show/confirm/show/' . $this->showid; ?>">
+			
+			<input type="submit" name="confirm" value="Email Confirmations" />
+			</form>
+		</td>
+	</tr>
+</table>
+
+

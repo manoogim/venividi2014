@@ -1,0 +1,47 @@
+<?php
+$this->headScript()->appendFile(  $this->baseUrl(). '/js/horsedraw.js');
+?>
+<h2><?php echo $this->title; ?> 
+
+</h2>
+<div id='thetip'>
+In each cell, if you click once you will get X ( horse goes), 
+if you click twice you will get A (horse is alternate) and if you click the third time, it will clear the cell.  </div>
+<form name="drawform" action="<?php echo $this->url(array('action'=>'draw')); ?>" method="post">
+<table cellpadding='0' bgcolor="#FE2EF7">
+<tr >
+<th><br/> <br/></th>
+<?php foreach ($this->sects  as $s) :?>
+<th><?php echo $s->sectname; ?> </th>
+<?php endforeach;?>
+
+
+</tr>
+
+<?php foreach ($this->horses as $horse) : ?>
+<tr><td>
+<input type='text' readonly value=" <?php echo $horse['HORSE_NAME'] . ' - ' . $horse['BARN'];?>" name="<?php echo 'horseid' . $horse['HORSE_ID'];?>"  size='20' ></input>
+</td>
+<?php foreach ($this->sects  as $s) :?>
+<td align="center"> 
+ <input type='text' style="text-align: center;" size='1' maxlength='1' name="<?php echo 'hid' . $horse['HORSE_ID'] . '_' . $s->sectname ;?>" 
+ value ="<?php $horseid = $horse['HORSE_ID']; echo $this->draws[$horseid][$s->sectname]; ?>" onclick='sectclicked(this);' onkeyup='sectkeyup(this);'  ></input>
+ </td>
+<?php endforeach;?>
+<th align="center" id ="<?php echo 'totalrow_hid' . $horseid; ?>">
+
+<?php if (isset($horseid)) echo $this->cnts[$horseid]; ?>
+
+</th>
+</tr>
+<?php endforeach; ?>
+<tr><th><br/>Rides:</th>
+<?php $allrides=0; foreach ($this->sects as $s) :?>
+<th align="center" id=<?php  echo 'totalcol_' . $s->sectname; ?>><br/><?php echo '|' . $s->cnt; $allrides += $s->cnt; ?></th>
+<?php endforeach;?>
+<th><br/> <?php echo $allrides; ?></th>
+</tr>
+<tr><td><br/> <input type="submit" value="Save" id="submit"></input></td></tr>
+
+</table>
+</form>

@@ -1,0 +1,31 @@
+
+<!-- calendar stylesheet -->
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl().'/css/calendar-green.css');
+$this->headScript()->appendFile(  $this->baseUrl(). '/js/calendar.js')
+		->appendFile( $this->baseUrl().   '/lang/calendar-en.js')
+		->appendFile($this->baseUrl().    '/js/calendar-setup.js')
+//		->appendFile($this->baseUrl().    '/js/initshow.js')
+		;
+
+?>
+
+<script type="text/javascript">
+  Calendar.setup(
+    {
+      inputField  : "SHOW_DATE",         // ID of the input field
+      ifFormat    : "%Y-%m-%d",    // the date format
+      button      : "triggerButton"       // ID of the button
+    }
+  );
+</script>
+
+<script type="text/javascript">
+  Calendar.setup(
+    {
+      inputField  : "CLOSE_DATE",         // ID of the input field
+      ifFormat    : "%Y-%m-%d",    			// the date format
+      button      : "triggerButton2"       // ID of the button
+    }
+  );
+</script>

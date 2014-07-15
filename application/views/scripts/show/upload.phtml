@@ -1,0 +1,35 @@
+<?php 	$tokarr=explode('/',$_SERVER['PHP_SELF']);
+$N = count($tokarr);
+$tokarr[$N-1]='';
+$myroot = implode('/',$tokarr);?>
+<h1><?= $this->title; ?></h1>
+<dl class="zend_form">
+	<dt>&nbsp;</dt>
+	<dd><?php 
+	if (isset ($this->logopath) ) {
+		$info = pathinfo($this->logopath);
+		echo '<img src="'. $myroot . 'data/' . $info['basename'] . '" alt="' . $this->logopath . '" />';
+	} else {
+		
+	}
+	?></dd>
+	<dt>&nbsp;</dt>
+	<dd><?php echo $this->bodycopy;?></dd>
+</dl>
+
+
+	<?= $this->form; ?>
+
+<br />
+<hr />
+<h1>Use Default Logo</h1>
+<form name="restorelogo" method="post"
+	action="<?php echo $this->baseUrl() . '/show/restorelogo/logo/' . $this->userid . '/show/' . $this->showid . '/eventtype/' . $this->eventtypeid ; ?>">
+<dl class="zend_form">
+	<dt>&nbsp;</dt>
+	<dd><img src="<?php 
+	echo  $myroot . 'data/' . $this->defaultlogo ; ?>" /></dd>
+	<dt>&nbsp;</dt>
+	<dd><input type="submit" name="submit" value="Use Default Logo" /></dd>
+</dl>
+</form>

@@ -1,0 +1,67 @@
+<?php
+$this->headScript()->appendFile(  $this->baseUrl(). '/js/showentry.js');
+?>
+<h1>Team Entry : <?php echo $this->teamname; ?></h1>
+
+<div id='thetip'>
+Eligible riders and their classes are listed. 
+Click once with the mouse in the white box to enter the rider into the class.
+Click twice to erase the entry.
+If the box is gray and non-clickable, it means that the team coach needs to adjust the riders classes for this season.
+<br></br>
+If you are the coach of the team, you can click the student name and edit the record now.
+</div>
+<form name="entryform" action="<?php echo $this->url(array('action'=>'entry')); ?>" method="post">
+<table>
+<tr>
+<th>Back N. </th>
+<th align="center">Rider</th>
+<?php foreach ($this->clazzes as $c) : ?>
+<th align="center"><?php echo $c->level ;?></th>
+<?php endforeach;?>
+</tr>
+
+<?php foreach ($this->students as $s) : ?>
+<tr>
+<td><input type="text" size='2' name="<?php echo 'h_' . $s['STUDENT_ID']?>" id="<?php echo 'h_' . $s['STUDENT_ID']?>"  
+value="<?php echo $s['BACK_NUMBER'];?>" ></input></td>
+
+<td>
+<?php $edithref = $this->url(array('controller'=>'student', 'action'=>'edit', 'where'=>'entry', 'student'=>$s['STUDENT_ID'])); 
+		$edittext = $s['FIRST_NAME'] . ' ' . $s['LAST_NAME'] ;		
+		$withlink = '<a href="' . $edithref . '"> ' . $edittext . ' </a>';
+		
+		if ($s['USER_ID'] == $this->ownerid) {
+			echo $withlink;
+		} else {
+			echo $edittext;
+		}
+?>
+
+
+<input type="hidden" name="<?php echo 'c_' . $s['STUDENT_ID']?>" id="<?php echo 'c_' . $s['STUDENT_ID']?>"  
+value="<?php echo $s['CLASS1_ID'] . '-' . $s['CLASS2_ID'];?>" ></input>
+</td>
+
+<?php foreach ($this->clazzes as $c):?>
+<td >
+<input type="text" 
+<?php if ($c->id==$s['CLASS1_ID'] || $c->id==$s['CLASS2_ID']) {
+	echo "style='background-color:white'" ;
+}
+else {
+	echo "style='background-color:#BDBDBD' readonly='true'" ;
+} ?>;'
+name="<?php echo 's_' . $s['STUDENT_ID'] . '_' . $c->id; ?>"
+			value="<?php $sid= $s['STUDENT_ID']; $cid=$c->id; echo $this->entries[$sid][$cid]; ?>"
+			size='1' maxlength="1" style="text-align: center;"
+			onclick='clsclicked(this);' onkeyup='clskeyup(this);'>
+</td>
+<?php endforeach;?>
+</tr>
+<?php endforeach;?>
+
+
+<tr><td colspan='15' align="center"><input type="submit" value="Save" name="submit" style='width: 100px;'></input></td></tr>
+</table>
+</form>

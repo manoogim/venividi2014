@@ -1,0 +1,12 @@
+
+<table>
+<?php echo 'APPLICATION_ENV=' . APPLICATION_ENV; ?>
+<?php echo '<br></br>' . ' zones =' . $this->zones ;?>
+<?php echo '<br></br>' . ' error =' . $this->error ;?>
+<?php foreach(array_keys($this->health) as $k) :?>
+<?php if ($k != 'resources.db.params.password') : ?>
+<tr><th align='left'><?php echo $k;?></th><td align='left'><?php echo $this->health[$k];?></td></tr>
+<?php endif;?>
+<?php endforeach;?>
+
+</table>
