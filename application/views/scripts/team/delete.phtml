@@ -1,0 +1,10 @@
+<p>Are you sure that you want to delete team
+  '<?php echo $this->escape($this->team['TEAM_NAME']); ?>'  and all it's students
+</p>
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
+<div>
+  <input type="hidden" name="teamid" value="<?php echo $this->team['TEAM_ID']; ?>" />
+  <input type="submit" name="del" value="Yes" />
+  <input type="submit" name="del" value="No" />
+</div>
+</form>

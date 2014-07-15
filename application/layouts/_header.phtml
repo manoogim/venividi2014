@@ -1,0 +1,30 @@
+<?php $ns = new Zend_Session_Namespace('myshows'); ?> <?php if ('development' == APPLICATION_ENV): ?> 	<table bgcolor="red" border="5" bordercolor="0" width="100%"> 		<tr><td align="center">  TESTING TESTING TESTING <?php endif ?> 	 </td></tr> 	</table>
+<?php if ($ns->showid > 0): ?>
+
+<table bgcolor="FFFFCC" border="5" rules="none" bordercolor="990099" width="100%">
+	<tr>
+		<th>Show Name:</th>
+		<td><?=$ns->show->name?></td>
+	</tr>
+	<tr>
+		<th>Show Type:</th>
+		<td><?= $ns->show->type ?></td>
+	</tr>
+	<tr>
+	<th>Host:</th>
+	<td><?= $ns->show->host; ?> </td>
+	<tr>
+		<th>Show Date:</th>
+		<td><?=$ns->show->date?></td>
+	</tr>
+	<tr>
+		<th>Close Date:</th>
+		<td><?=$ns->show->close ?></td>
+	</tr>
+	<tr>
+		<th>Status:</th>
+		<td><font color="<?php if ('OPEN'== $ns->show->status) echo 'green'; else echo 'red';?>"> <?php echo $ns->show->status; ?></font></td>
+	</tr>
+</table>
+<br></br>
+<?php endif; ?>

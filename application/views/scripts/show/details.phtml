@@ -1,0 +1,101 @@
+<table cellpadding='3' align="center" width="75%">
+<tr><td colspan=2><hr/></td></tr>
+<tr>
+<th colspan='2' align="center">You are cordially invited to the horse show</th>
+</tr>
+<tr><td colspan='2' align="center"><?= $this->event['EVENT_TYPE_NAME'] ?></td></tr>
+<tr><td colspan='2' align="center"><?php $rgn = $this->show['INVITED_RGN']==-1 ? 'ALL' : $this->show['INVITED_RGN']; echo 'Zone ' . $this->show['INVITED_ZONE'] . ' Region ' .  $rgn ;?></td></tr>
+<tr><td colspan='2' align="center"><?= $this->show['SHOW_NAME'] ?></td></tr>
+<tr><td colspan='2' align="center"><?php $zd = new Zend_Date($this->show['SHOW_DATE'],'yyyy-MM-dd'); echo  $zd->get(Zend_Date::DATE_FULL); ?></td></tr>
+<tr><td colspan='2' align="center"><?= $this->show['SHOW_TIME'] ?></td></tr>
+<tr><td colspan=2><br/></td></tr>
+
+<tr><td colspan="2" align="center">This show will be run in accordance with the rules and 
+regulations of the Intercollegiate Horse Show Association.</td></tr>
+<tr><td colspan=2><br/></td></tr>
+	<tr><th></th><th>Classes will be run in the following order:</th></tr>
+	<tr>
+		<td></td>
+		<td colspan='1'><?php foreach ($this->classes as $c) {
+			echo  $c->level . ' - ' . $c->name . '<br/>';
+		}
+		?></td>
+	</tr>
+	<tr>
+		<th align="right">Entries Deadline:</th>
+		<td><?php $zd = new Zend_Date($this->show['CLOSE_DATE'],'yyyy-MM-dd'); 
+		echo  $zd->get(Zend_Date::DATE_FULL) . '     ';
+
+		$isopen = !Model_DbTable_Shows::isClosed($this->show['SHOW_ID']);
+		$haveinvitedteams = count($this->myinvitedteams)>0;
+			// display link to register now or link to add team
+		if ($isopen && $haveinvitedteams) {
+				$teamid = $this->myinvitedteams[0]['TEAM_ID'];
+				$teamname = $this->myinvitedteams[0]['TEAM_NAME'];
+				$arr = array(
+            			'controller'=>'entry',
+            			'action'=>'entry',
+            			'owner'=>$this->show['USER_ID'],
+            			'show'=>$this->show['SHOW_ID'],
+						'where'=>'team',
+	            		'team'=>$teamid,
+						'teamName'=>$teamname,
+				);
+				
+				$cururl = $this->url($arr);
+				echo '<a href="' . $cururl . '">Register Now </a>'; 
+			
+		} else if ($isopen) {
+				$cururl = $this->url(array('controller'=>'team', 'action'=>'add'));
+				echo '<a href="' . $cururl . '">Add New Team </a>'; 
+			
+			} else {
+				echo '<b><font color="red">THIS SHOW IS NOW CLOSED</font></b>';
+			}
+		
+		?> 
+		
+		</td>
+	</tr>
+
+	<tr><th align="right">Entry Fee:</th><td><?= "$" . $this->show['ENTRY_FEE'] ?></td></tr>
+<tr><th align="right">Registration Time:</th><td><?= $this->show['REGISTRATION_TIME'] ?></td></tr>
+	<tr>
+		<th align="right">Address:</th>
+		<td><?php echo $this->show['ADDRESS'] ;?>
+		<a href="<?php echo 'http://maps.google.com/maps?q=' . $this->show['ADDRESS'] ; ?>">goggle maps</a>
+		</td>
+	</tr>
+	<tr><th align="right">Judge:</th><td><?= $this->show['JUDGE'] ?></td></tr>
+<tr><th align="right">Contact Person:</th><td><?php echo $this->user['FIRST_NAME'] . ' ' . $this->user['LAST_NAME']; ?></td></tr>
+<tr><th align="right">Email: </th><td><?= $this->user['EMAIL'] ;?></td></tr>
+<tr><th align="right">Phone:</th><td><?= $this->user['PHONE']; ?></td></tr>
+<tr><td colspan="2"><br/></td></tr>
+<tr><td colspan="2" align="center">
+<b>Misc. Notes:</b><br/>
+<?php $toks = explode(',', $this->show['MISC_OTHER']);
+foreach ($toks as $tok) {
+	echo $tok . '<br/>';
+} ?></td></tr>
+
+<tr><td colspan=2><br/></td></tr>
+<tr><td colspan=2><hr/></td></tr>
+<tr><td colspan="2" align="center">
+<?php if ($this->show['USER_ID']==Zend_Auth::getInstance()->getIdentity()->USER_ID) {
+	$editurl = $this->baseUrl() . '/show/edit/show/' . $this->show['SHOW_ID'];
+	$emailurl = $this->baseUrl() . '/show/email/show/' . $this->show['SHOW_ID'];
+	$confirmurl = $this->baseUrl() . '/show/confirm/show/' . $this->show['SHOW_ID'];
+	//$uploadurl = $this->baseUrl() . '/show/upload/logo/' . $this->show['USER_ID'] . '/show/' .$this->show['SHOW_ID'] ;
+	
+	echo '<a href="'. $editurl .'"> Edit Show</a> | ';	
+	echo '<a href="'. $emailurl .'"> Invited Teams </a> | ';
+	echo '<a href="'. $confirmurl .'"> Confirm Entries </a> | ';
+	//echo '<a href="'. $uploadurl .'"> Upload Logo </a> ';
+}
+
+?>
+</td></tr>
+
+</table>
+
+

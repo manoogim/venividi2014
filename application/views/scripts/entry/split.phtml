@@ -1,0 +1,38 @@
+
+<h1>Sections for <?php  echo  $this->clazzname; ?></h1>
+<?php foreach($this->entries as $sect) : ?>
+<?php if (count($sect) > 0):  ?>
+<h2>Section <?php echo $sect[0]->sectname; ?></h2>
+
+<table>
+	<tr>
+		<th>Number</th>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Team Name</th>
+
+	</tr>
+	<?php $cnt=1; foreach($sect as $cc) : ?>
+	<tr>
+		<td><?php echo $cnt++ . '. ' . $this->escape($cc->backnumber);?></td>
+		<td><?php echo $this->escape($cc->firstname);?></td>
+		<td><?php echo $this->escape($cc->lastname);?></td>
+		<td><?php echo $this->escape($cc->teamname);?></td>
+
+	</tr>
+	<?php endforeach; ?>
+
+</table>
+
+<?php endif;  ?>
+<?php endforeach; ?>
+<form name='split' method='post'
+	action="<?php echo $this->url(array('action'=>'split')); ?>">
+	
+<input name='clazzname' type='hidden' value="<?php  echo  $this->clazzname; ?>" ></input>
+<input name='clazz' type='hidden' value="<?php  echo  $this->clazz; ?>" />
+<label for='splitcnt'>How Many Sections:</label>
+<input name='splitcnt' type='text' size='3' value="<?php  echo  $this->splitcnt; ?>" /> 
+<input name='splitbtn' type='submit' value='Create Sections' />
+	
+</form>

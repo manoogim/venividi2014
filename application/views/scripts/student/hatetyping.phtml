@@ -1,0 +1,37 @@
+<h4><?php echo $this->title; ?></h4>
+
+<table>
+	<tr>
+		<td><?php 
+		echo $this->form ;
+		?></td>
+		<td valign="top">
+		<div id='thetip'>
+		You can enter multiple rider names on separate lines. If you type:<br/>
+Baljir,Baatartogtoh<br/>
+Faye,Keegan<br/>	
+you will get two rider records:	</br>		
+1. Baljir Baatartogtoh<br/>
+2. Faye Keegan<br/>
+<br/>
+
+If you know the class levels, you can type: <br/>
+Baljir,Baatartogtoh,1<br/>
+Faye,Keegan,7,8<br/>
+which will result in rider records:<br/>
+1. Baljir Baatartogtoh  1-Walk Trot   <br/>
+2. Faye Keegan  7-Open Flat, 8-Open Fences<br/>
+
+<br/>
+Tip: <br/>
+rather than typing, you can paste from txt or csv files.
+If the format of your csv or txt file is slightly
+differentfrom the above, it may not work. 
+If you try and paste it and if you don't like the resulting
+records, just delete the whole team and 
+you can always enter each rider
+individually. Try it!
+		</div></td>
+	</tr>
+</table>
+

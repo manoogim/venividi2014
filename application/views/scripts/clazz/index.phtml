@@ -1,0 +1,57 @@
+<h1><?= $this->title; ?></h1>
+<div id='thetip'>To view entries for this show, click [Entries] next to
+the class name. <br/>
+To split any class click [Sections] and enter the number
+of splits.<br/>
+To change order of classes in the program, click up or down arrow.
+</br>
+To delete <em>all entries</em> for this show and start over, click 
+<a href='<?php echo $this->url(array('controller'=>'entry','action'=>'delete'));?>'>here.</a>
+</div>
+
+<table cellpadding='3' cellspacing='3'>
+	<tr>
+
+		<th>Class Name</th>
+		<th>&nbsp;</th>
+	</tr>
+	<?php
+	$tokarr=explode('/',$_SERVER['PHP_SELF']); 
+	$N = count($tokarr);
+	$tokarr[$N-1]='';
+	$myroot = implode('/',$tokarr);
+	$cnt=0;
+	foreach($this->classes as $cc) : ?>
+	<tr>
+
+	
+		<td><?php echo   $this->escape($cc->level) .' - ' . $this->escape($cc->name) ;?></td>
+
+		<td>
+		
+		<?php if ($cnt > 0) :?>
+		<a href="<?php echo $this->baseUrl() . '/clazz/index/permute/' . $cnt; ?>"><img src="<?= $myroot . 'images/arrow_up.gif' ?>" border=0></a>
+		<?php endif;?>
+		</td>
+		<td>
+		
+		<?php if ($cnt < count($this->classes)-1) :?>
+		<a href="<?php echo $this->baseUrl() . '/clazz/index/permute/' . (-$cnt); ?>"><img src="<?= $myroot . 'images/arrow_down.gif' ?>"  border=0></a>
+		<?php endif;?>
+
+</td>
+		<?php if ($cc->entrycnt > 0): ?> <td> <a
+			href="<?php echo $this->baseUrl() . '/entry/list/clazz/' . $cc->id . '/clazzname/' . $cc->name; ?>">(<?php echo $cc->entrycnt; ?>) Entries </a></td>
+			<td>
+<a
+			href="<?php echo $this->baseUrl() . '/entry/split/clazz/' . $cc->id . '/clazzname/' . $cc->name; ?>"> (<?php echo $cc->sectcnt; ?>) Sections</a></td>
+			<?php endif; ?>
+		
+	</tr>
+	<?php $cnt++; endforeach; ?>
+</table>
+
+
+
+
+

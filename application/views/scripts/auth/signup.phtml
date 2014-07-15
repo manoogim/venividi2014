@@ -1,0 +1,11 @@
+<div id ="warning">
+<?php
+if(isset($this->errorMessage)){
+	echo $this->errorMessage;}?>
+</div>
+
+<h1><?php echo $this->title; ?></h1>
+	<?php 
+	echo $this->form;
+	include "_terms.phtml"
+	?>

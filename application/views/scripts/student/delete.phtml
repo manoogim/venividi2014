@@ -1,0 +1,10 @@
+<p>Are you sure that you want to delete student
+  '<?php echo $this->escape($this->student['FIRST_NAME']); ?>' 
+</p>
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
+<div>
+  <input type="hidden" name="studentid" value="<?php echo $this->student['STUDENT_ID']; ?>" />
+  <input type="submit" name="del" value="Yes" />
+  <input type="submit" name="del" value="No" />
+</div>
+</form>

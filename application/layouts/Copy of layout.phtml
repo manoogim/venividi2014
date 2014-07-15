@@ -1,0 +1,24 @@
+<?php echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<?php echo $this->headMeta(); ?>
+<?php echo $this->headTitle(); ?>
+<?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/css/site.css'); ?>
+</head>
+<body>
+<div id="menu"><?php echo $this->buildMenu(); ?></div>
+<div id="header">
+<?php echo $this->profileLink() ; ?>
+</div>
+
+<div id="content">
+<?php include "_header.phtml" ?>
+<h1>
+<?= $this->escape($this->title); ?></h1>
+
+<?=$this->layout()->content; ?>
+</div>
+
+<?php include "_footer.phtml" ?>
+</body>
+</html>

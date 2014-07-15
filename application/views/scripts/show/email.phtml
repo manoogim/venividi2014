@@ -1,0 +1,29 @@
+<h1><?= $this->title?></h1>
+<table>
+	<tr>
+		<th>Email</th>
+		<th>Coach/Captain</th>
+		<th>Team</th>
+	</tr>
+	<?php 
+$cnt=0; 
+
+foreach ($this->coaches as $t) :?>
+	<tr>
+		<td><?php echo ++$cnt . '. ' . $t['EMAIL'] ; ?></td>
+		<td><?php echo $t['FIRST_NAME'] . ' ' . $t['LAST_NAME'];?></td>
+		<td><?php echo $t['TEAM_NAME'];?></td>
+	</tr>
+	<?php endforeach;?>
+	<tr><td align = 'center' colspan='3'>
+	<?php echo $this->showlink; ?>
+	</td></tr>
+	<tr>
+		<td align = 'center' colspan='3'>
+		<form name="emailinvite" method="post"
+			action="<?php echo $this->baseUrl() . '/show/email/show/' . $this->showid; ?>">
+			<input
+			type="submit" name="email" value="Email Invitations" /></form>
+		</td>
+	</tr>
+</table>

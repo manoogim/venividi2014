@@ -1,0 +1,10 @@
+<p>Are you sure that you want to delete horse
+  '<?php echo $this->escape($this->horse['HORSE_NAME']); ?>'  
+</p>
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
+<div>
+  <input type="hidden" name="horseid" value="<?php echo $this->horse['HORSE_ID']; ?>" />
+  <input type="submit" name="del" value="Yes" />
+  <input type="submit" name="del" value="No" />
+</div>
+</form>

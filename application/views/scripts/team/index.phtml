@@ -1,0 +1,82 @@
+<h1><?php echo $this->title; ?></h1>
+<table cellpadding='3' cellspacing='3'>
+
+	<tr bgcolor="yellow" >
+		<th colspan="6"><a
+			href="<?php echo $this->url(array('controller'=>'team', 
+        'action'=>'add'));?>">Add new team</a></th>
+	</tr>
+	<tr>
+		<th>Team Name</th>
+		<th>Coach/Captain</th>
+		<th>Email</th>
+		<th>Zone/Rgn</th>
+
+	</tr>
+	<?php $cnt=1; foreach($this->teams as $team) : ?>
+	<tr align="left"
+		bgcolor=<?php if ($cnt % 2 ==1) echo '#BEF781'; else echo 'white';?>>
+		<td><?php echo $cnt++ . '. ' . $this->escape($team['TEAM_NAME']);?></td>
+		<td><?php echo $this->escape($team['FIRST_NAME'] . ' ' . $team['LAST_NAME']);?></td>
+		<td><?php echo $this->escape($team['EMAIL']);?></td>
+		<td><?php echo 'Z-' . $this->escape($team['ZONE_ID']) . ' / R-' . $this->escape($team['RGN_ID']);?></td>
+
+
+		<td><?php if ($team['USER_ID']==Zend_Auth::getInstance()->getIdentity()->USER_ID) :?>
+		<a
+			href="<?php echo $this->url(array('controller'=>'team', 
+            'action'=>'edit', 'team'=>$team['TEAM_ID']));?>">Edit</a> 
+            
+        <a
+			href="<?php echo $this->url(array('controller'=>'team', 
+            'action'=>'delete', 'team'=>$team['TEAM_ID']));?>">Delete</a>
+
+		<a
+			href="<?php echo $this->url(array('controller'=>'student', 
+            'action'=>'index', 
+            'owner'=>$team['USER_ID'], 
+            'team'=>$team['TEAM_ID'],
+            'type'=>$team['EVENT_TYPE_ID'],
+            'teamName'=>$team['TEAM_NAME']));?>">Riders</a> <?php endif;?>
+
+		</td>
+		<td><?php 
+		// if current is my show and the team is invited .. display entry grid
+		// or if this is my team and show is open , display entry grid
+		$userid = Zend_Auth::getInstance()->getIdentity()->USER_ID;
+		$ns = new Zend_Session_Namespace('myshows');
+		unset($myteam);
+		unset ($invited);
+		unset ($cururl);
+		$myshow =isset ($ns->show) && $ns->show->owner == $userid;
+		$invited = isset($this->invitedteams) && in_array($team['TEAM_ID'], $this->invitedteams);
+		$openshow = isset ($ns->show)  &&  'OPEN' == $ns->show->status;
+		$myteam = $userid == $team['USER_ID'];
+		//		echo '$openshow=' . $openshow . '$myteam=' . $myteam . '$invited=' . $invited;
+		//echo ('$ns->show->owner='.$ns->show->owner . '$userid=' . $userid . '$this->invitedteams=' . json_encode($this->invitedteams));
+		if ( ($myshow && $invited) || ($myteam && $openshow && $invited)) {
+
+			$curtxt = 'Entry';
+			$cururl = $this->url(array(
+            			'controller'=>'entry',
+            			'action'=>'entry',
+            			'owner'=>$userid,
+            			'show'=>$ns->showid,
+						'where'=>'team',
+	            		'team'=>$team['TEAM_ID'],
+						'type'=>$team['EVENT_TYPE_ID'],
+	            		'teamName'=>$this->escape($team['TEAM_NAME'])));
+			// if this is my show, and team is of the same type but it is not invited, display 'invite link
+		} else if ( isset ($ns->show) && $ns->show->owner == $userid && !in_array($team['TEAM_ID'], $this->invitedteams)
+		&& $team['EVENT_TYPE_ID']==$ns->show->typeid) {
+			$cururl=$this->url(array('controller'=>'team','action'=>'invite','team'=>$team['TEAM_ID']));
+			$curtxt='Invite';
+
+		}
+
+		if (isset($cururl)) echo '<a href="' . $cururl . '"> ' . $curtxt . ' </a>';
+
+		?></td>
+	</tr>
+	<?php endforeach; ?>
+</table>

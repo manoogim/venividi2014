@@ -1,0 +1,28 @@
+<?php echo
+$this->headLink()->prependStylesheet($this->baseUrl().'/css/horizont.css');
+?>
+<form action="<?php echo $this->url(array('action'=>'update')); ?>" method="post">
+<ul>
+ 
+<li>
+<INPUT type='checkbox'
+	name='myzone[]' 
+	value='5'> Zone 5 
+</li>
+ 
+<li>
+<INPUT type='checkbox'
+	name='myzone[]' checked
+	value='6'> Zone 6 
+</li>
+ 
+<li>
+<INPUT type='checkbox'
+	name='myzone[]' 
+	value='7'> Zone 8 
+</li>
+ 
+
+ 
+</ul>
+</form>

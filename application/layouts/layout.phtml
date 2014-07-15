@@ -1,0 +1,49 @@
+<?php echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<?php echo $this->headMeta(); ?>
+<?php echo $this->headTitle(); ?>
+<?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/css/site.css'); ?>
+<?php echo $this->headScript()->appendFile($this->baseUrl().    '/js/init.js') ; ?>
+</head>
+<body onload='init();'>
+
+<div id="menu"><?php echo $this->buildMenu(); ?></div>
+<div id="menuheader"><?php echo $this->profileLink(1) ; ?></div>
+
+<div id="container">
+
+	<div id="content" class="column">
+		
+			<?php include "_header.phtml" ?>
+
+	
+	<?=$this->layout()->content; ?>
+	</div>
+	<div id="pad"></div>
+
+</div>
+
+
+<div id="right" class="column">
+<script type="text/javascript"><!--
+google_ad_client = "pub-2008286042379479";
+/* 300x250, created 10/13/09 */
+google_ad_slot = "9397956563";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script> <script type="text/javascript"
+	src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<?php include "_soapbox.phtml" ?>
+</div>
+<div id="footer"><br></br>
+<br></br>
+<?php
+echo  $this->profileLink(2) ;
+echo '<br></br>';
+include "_footer.phtml" ?></div>
+
+</body>
+</html>

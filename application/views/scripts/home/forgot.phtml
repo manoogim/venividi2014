@@ -1,0 +1,26 @@
+<form name="forgot" method="post"
+	action="<?php echo $this->url(array('action'=>'forgot')); ?>">
+<table cellpadding="3" cellspacing="1">
+	<tr>
+		<th>Your email</th>
+		<td><?php $url= $this->baseUrl() . '/home/forgot/'?> <input
+			type="text" name="email_to" id="email_to" size="25"> <input
+			type="submit" name="Submit" value="Submit"></td>
+	</tr>
+</table>
+
+<div id="error" style="display: none">
+There is no user with such email.
+<a href="<?php echo $this->url(array('controller'=>'auth', 'action'=>'signup')); ?>">Register</a>
+</div>
+</form>
+
+<div id="error" style="display:none">
+Email failed due to technical problems, please come back later.
+</div>
+
+<div id="foundit" style="display: none">
+Your email has been sent.
+<a href="<?php echo $this->url(array('controller'=>'auth', 'action'=>'login')); ?>">Login</a>
+</div>
+</form>

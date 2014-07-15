@@ -1,0 +1,54 @@
+<div id ="warning">
+<?php
+$tokarr=explode('/',$_SERVER['PHP_SELF']); 
+	$N = count($tokarr);
+	$tokarr[$N-1]='';
+	$myroot = implode('/',$tokarr);
+
+if(isset($this->errorMessage)){
+	echo $this->errorMessage;}?>
+</div>
+
+<h1>Welcome to Veni, Vidi, Vici! </h1>
+<div id='thetip'>
+Setup your next IHSA show in 5 minutes. Classes are predefined for IHSA competition types: Hunter seat and Western. <br/>
+1. Enter show details such as date, time, address, contact info, etc.<br/>
+2. At the same time, or earlier, the coaches from the same zone/region can enter their rider names and eligible classes. 
+This is a one-time data entry, it can be reused for the next show.<br/>
+3. Enter horses names (optional).<br/>
+4. Click a button to create show program and prizelist.<br/>
+5. Click a button to print show program, point cards, judges cards, team accounts, and horse draw sheets (optional).<br/>
+
+<h2> Examples:</h2>
+<li><a href = <?= $myroot . "samples/program.pdf" ?> >Complete Show Program</a></li>
+<li><a href = <?= $myroot . "samples/accounts.pdf" ?> >Team Accounts</a></li>
+<li><a href = <?= $myroot . "samples/pointcards.pdf" ?> >Pointcards</a></li>
+<li><a href = <?= $myroot . "samples/judgescards.pdf" ?> >Judge's Cards</a></li>
+<li><a href = <?= $myroot . "samples/horsedrawsheets.pdf" ?> >Horse Draw Sheets</a></li>
+<li><a href = <?= $myroot . "samples/horsedrawsheets-empty.pdf" ?> >Empty Horse Draw Sheets</a></li>
+</div>
+
+
+
+<h5>It is fast, it is easy and it is free for <a href="http://www.ihsainc.com/">IHSA </a>show hosts.</h5>
+
+<div id="stuff">
+<?php
+echo $this->form;
+?> 
+<br></br>
+<h3>Not a member yet ? &nbsp;&nbsp;&nbsp;&nbsp;
+<a
+	href="<?=$this->url(array('controller'=>'auth','action'=>'signup'))?>">
+Register</a> </h3>
+<br></br>
+<!--  
+<a
+	href="<?=$this->url(array('controller'=>'home','action'=>'forgot'))?>">
+Forgot Password ?</a>
+-->
+</div>
+
+
+
+

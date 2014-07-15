@@ -1,0 +1,57 @@
+<h1><?= $this->title; ?> </h1>
+
+<table cellpadding='3' cellspacing='3' >
+<tr bgcolor="yellow"><th><a href="<?php echo $this->url(array('controller'=>'horse', 
+        'action'=>'add'));?>">Add new horse   </a></th>
+        <th colspan="7">
+        <?php $ns = new Zend_Session_Namespace('myshows');
+        if ($ns->showid > 0 && $ns->show->owner==Zend_Auth::getInstance()->getIdentity()->USER_ID) {
+        	$drawurl = $this->url(array('controller'=>'horse', 'action'=>'draw'));
+        	echo '<a href="'. $drawurl .'">Horse Usage</a>';
+        	
+        	$printurl =  $this->url(array('controller'=>'report', 'action'=>'horsedraw'));
+        	echo '&nbsp; &nbsp; <a href="'. $printurl .'">Horse Draw Sheets</a>';
+        }
+         ?>
+        </th>
+        </tr>
+<tr>
+    <th>Name</th>
+    <th>Home Barn</th>
+    <th>Sex</th>
+    <th>Color</th>
+    <th>Height</th>
+    <th>Breed</th>
+   
+</tr>
+<?php $cnt=1; foreach($this->horses as $horse) : ?>
+<tr align='left' bgcolor=<?php if ($cnt % 2 ==1) echo '#F5A9D0'; else echo 'white';?> >
+		<td><?php echo $cnt++ . '. ' . $this->escape($horse['HORSE_NAME']);?></td>
+		<td><?php echo $this->escape($horse['BARN'] );?></td>
+		<td ><?php echo $this->escape($horse['GENDER'] ) ?></td>
+		<!-- 
+		<td ><?php echo $this->escape($horse['BREED'] ) . ' / ' . $this->escape($horse['COLOR']) . ' / ' . $this->escape($horse['HEIGHT'] );?></td>  
+		-->
+		
+		<td ><?php echo $this->escape($horse['COLOR'] ) ?></td>
+		<td ><?php echo $this->escape($horse['HEIGHT'] ) ?></td>
+		<td ><?php echo $this->escape($horse['BREED'] ) ?></td>
+
+		
+		<td>
+		<?php if ($horse['USER_ID']==Zend_Auth::getInstance()->getIdentity()->USER_ID) :?>
+		<a
+			href="<?php echo $this->url(array('controller'=>'horse', 
+            'action'=>'edit', 'horse'=>$horse['HORSE_ID']));?>">Edit</a> <a
+			href="<?php echo $this->url(array('controller'=>'horse', 
+            'action'=>'delete', 'horse'=>$horse['HORSE_ID']));?>">Delete</a>
+            <?php endif;?>
+
+		</td>
+
+	</tr>
+<?php endforeach; ?>
+</table>
+
+
+

@@ -1,0 +1,12 @@
+<p>Are you sure that you want to delete <em>all entries</em> for show 
+  '<?php echo $this->escape($this->showname); ?>' 
+?
+  
+</p>
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
+<div>
+  <input type="hidden" name="showid" value="<?php echo $this->show['SHOW_ID']; ?>" />
+  <input type="submit" name="del" value="Yes" />
+  <input type="submit" name="del" value="No" />
+</div>
+</form>

@@ -1,0 +1,54 @@
+<?php 
+$myteam = ($this->owner) == (Zend_Auth::getInstance()->getIdentity()->USER_ID);
+$myurl = $this->url(array('controller'=>'student', 'action'=>'add', 'teamId'=>$this->teamId));
+$myurl2 = $this->url(array('controller'=>'student', 'action'=>'hatetyping', 'teamId'=>$this->teamId));
+$ns=new Zend_Session_Namespace('myshows'); 
+
+if (isset($ns->showid)) {
+	$myshow = Model_DbTable_Shows::isMyShow($ns->showid);
+	$invited = Model_DbTable_ShowTeams::isInvited($this->teamId, $ns->showid);
+	$closed = Model_DbTable_Shows::isClosed($ns->showid);
+} else {
+	$myshow = false;
+	$invited = false;
+	$closed = true;
+}
+;
+//echo '$myshow=' . $myshow . '$invited=' . $invited . '$myteam=' . $myteam .  '$closed=' . $closed;
+?>
+
+
+<h1><?php echo $this->title ; ?> </h1>
+
+<table cellpadding='3' cellspacing='3'>
+<?php if ($this->teamId > 0 && $myteam) : ?>
+<tr bgcolor="yellow">
+<th colspan="5"><a href="<?php echo $myurl ?>">Add new rider</a>  </th>
+
+</tr>
+<?php endif; ?>
+<tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Team</th>
+     <th>Classes</th>
+</tr>
+<?php $cnt=1; foreach($this->students as $student) : ?>
+<tr align='left' bgcolor=
+<?php if ($cnt % 2 ==1) echo '#F2F5A9'; else echo 'white';?>
+>
+
+    <td><?php echo $cnt++ . '. ' . $this->escape($student['FIRST_NAME']);?></td>
+    <td><?php echo $this->escape($student['LAST_NAME']);?></td>
+     <td><?php echo $this->escape($student['TEAM_NAME']);?></td>
+       <td><?php echo $this->escape($student['cls']);?></td>
+    <td> 
+    <?php if ($myteam) : ?>
+        <a href="<?php echo $this->url(array('controller'=>'student', 
+            'action'=>'edit', 'student'=>$student['STUDENT_ID']));?>">Edit</a>
+        <a href="<?php echo $this->url(array('controller'=>'student', 
+            'action'=>'delete', 'student'=>$student['STUDENT_ID']));?>">Delete</a>
+     <?php endif;?>
+     </td></tr>
+<?php endforeach; ?>
+</table>

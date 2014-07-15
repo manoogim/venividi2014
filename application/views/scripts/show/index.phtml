@@ -1,0 +1,84 @@
+<table cellpadding='2' cellspacing='2'>
+<?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+<tr bgcolor="yellow"><th colspan="7"><a
+	href="<?php echo $this->url(array('controller'=>'show', 
+        'action'=>'add'));?>">Add new show</a></th></tr>
+<?php endif;?>
+	<tr bgcolor='#A9F5A9'>
+
+		<th>Show Name</th>
+	
+		<th>Host</th>
+		<th>Show Date</th>
+		<th>Close Date</th>
+		<th>Status</th>
+		<th colspan='2'>	
+		</th>
+	</tr>
+	<?php $cnt=0;  foreach($this->shows as $show) : ?>
+	<tr align="left" 
+		
+	<?php $cnt++;
+
+	$bgcolor='white';
+	$color='black';
+	$fontstyle='normal';
+	if ('CLOSED'== $show['STATUS']) {
+		$bgcolor= '#F0F0F0';
+		$color='#888';
+		$fontstyle = 'italic';
+	} else if ($cnt % 2 == 0) {
+		$bgcolor= '#A9F5A9';
+	}
+
+	$ns = new Zend_Session_Namespace('myshows');
+	if 	($show['SHOW_ID']== $ns->showid) $fontw='bold';
+	else $fontw = 'normal';
+	?>
+		bgcolor="<?=$bgcolor?>" 
+		style="font-weight: <?=$fontw?>; font-style:<?= $fontstyle?>; color:<?=$color ?>"
+		
+		>
+
+		<td
+		<?php
+
+		if ($show['SHOW_ID']== $ns->showid) echo 'style="font-weight:bold"';?>>
+		<?php  echo  $this->escape($show['SHOW_NAME']);?></td>
+		
+		<td><?php echo $this->escape($show['FIRST_NAME'] . ' ' . $show['LAST_NAME']);?></td>
+		<td><?php echo $this->escape($show['SHOW_DATE']);?></td>
+		<td><?php echo $this->escape($show['CLOSE_DATE']);?></td>
+		<td><?php echo $this->escape($show['STATUS']);?></td>
+		<td><?php 
+		unset($cururl);
+
+		$curtxt = 'Details';
+		$cururl = $this->url(array(
+            			'controller'=>'show',
+            			'action'=>'details',
+            			
+            			'show'=>$show['SHOW_ID'],
+						'where'=>'team',
+
+		));
+
+		
+		if (isset($cururl)) echo '<a href="' . $cururl . '">' . $curtxt . '</a>' ;
+		
+		?></td>		
+		<td><?php if (Model_DbTable_Shows::isMyShow($show['SHOW_ID'])) :?> 
+
+            <a href="<?php echo $this->url(array('controller'=>'show', 'action'=>'copy', 'show'=>$show['SHOW_ID']));?>">Repeat</a>
+            
+				<?php if (!Model_DbTable_Entries::getInstance()->hasEntries($show['SHOW_ID']) ) :?> 
+				<a href="<?php echo $this->url(array('controller'=>'show', 'action'=>'delete', 'show'=>$show['SHOW_ID']));?>">Delete</a>
+				<?php endif; ?> 
+				
+			<?php endif;?>
+			</td>
+
+
+	</tr>
+	<?php endforeach; ?>
+</table>

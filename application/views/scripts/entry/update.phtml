@@ -1,0 +1,35 @@
+<?php $this->nexturl = $this->url(array('controller'=>'student','action'=>'index',
+'owner'=>$this->owner, 'team'=>$this->team, 'teamName'=>$this->escape($this->teamname)));
+ ?>
+   <div id='thetip'>
+   Enter rider back number and check desired class entries.
+  Available classes are predefined based on the show type (hunter seat or western).
+  Each coach is responsible for chosing eligible classes only for each participant.<br/>
+  The show host can update entries at any time, 
+  and other participants only if invited and only if the show is still open.
+</div>
+  <h1>Entries for <?php echo $this->studentname; ?></h1>
+
+<form action="<?php echo $this->url(array('action'=>'update')); ?>" method="post">
+<div>
+
+<input type="hidden" name="showid" value="<?php echo $this->showid; ?>" />
+<input type="hidden" name="studentid" value="<?php echo $this->studentid; ?>" /> 
+<label for="backnumber">Back Number:</label> <input type='text' name='backnumber' size='3' value="<?php echo $this->backnumber; ?>" ?></input>
+  
+  <br></br>
+  <br></br>
+  
+<?php foreach($this->clazzes as $e) : ?> 
+
+<INPUT type='checkbox'
+	name='myentry[]' 
+	value='<?php echo $e->classid;?>'
+	<?php echo $e->checked; ?>> <?php echo $e->level . ' - ' . $e->classname ?> <BR/>
+	
+<?php endforeach; ?> 
+	<br></br>
+	<input type="submit" name="btn" value="Save" />
+  
+</div>
+</form>

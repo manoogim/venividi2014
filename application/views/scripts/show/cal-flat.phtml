@@ -1,0 +1,37 @@
+
+<!-- calendar stylesheet -->
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl().'/css/calendar-green.css');
+$this->headScript()->appendFile(  $this->baseUrl(). '/js/calendar.js')
+		->appendFile( $this->baseUrl().   '/lang/calendar-en.js')
+		->appendFile($this->baseUrl().    '/js/calendar-setup.js');
+
+?>
+
+
+<div id="calendar-container" style="float: left; margin-left: 25em; margin-bottom: -1em;"></div>
+
+<script type="text/javascript">
+  function mydateChanged(calendar) {
+    // Beware that this function is called even if the end-user only
+    // changed the month/year.  In order to determine if a date was
+    // clicked you can use the dateClicked property of the calendar:
+    if (calendar.dateClicked) {
+      // OK, a date was clicked, redirect to /yyyy/mm/dd/index.php
+      var y = calendar.date.getFullYear();
+      var m = calendar.date.getMonth();     // integer, 0..11
+      var d = calendar.date.getDate();      // integer, 1..31
+      // redirect...
+      //window.location = "/" + y + "/" + m + "/" + d + "/index.php";
+      var txt = document.getElementById("SHOW_DATE");
+      txt.value = y + '-' + m + '-' + d ;
+    }
+  };
+
+  Calendar.setup(
+    {
+      flat         : "calendar-container", // ID of the parent element
+      flatCallback : mydateChanged           // our callback function
+    }
+  );
+</script>

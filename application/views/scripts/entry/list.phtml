@@ -1,0 +1,26 @@
+
+<h1>Entries for <?php $cnt=1; echo $this->clazzid . '-' . $this->clazzname; ?></h1>
+
+<table cellpadding='2' cellspacing='2'>
+	<tr>
+		
+		<th>Number</th>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Team Name</th>
+
+	</tr>
+	<?php foreach($this->entries as $cc) : ?>
+	<tr>
+		
+		<td><?php echo $cnt++ . '. ' . $this->escape($cc['BACK_NUMBER']);?></td>
+		<td><?php echo $this->escape($cc['FIRST_NAME']);?></td>
+		<td><?php echo $this->escape($cc['LAST_NAME']);?></td>
+		<td><?php echo $this->escape($cc['TEAM_NAME']);?></td>
+
+	</tr>
+	<?php endforeach; ?>
+
+</table>
+
+
